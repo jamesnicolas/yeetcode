@@ -8,6 +8,9 @@ type ListNode struct {
 }
 
 func reverseUntil(head, tail *ListNode) *ListNode {
+	if tail == nil {
+		return head
+	}
 	if head != nil && head.Next != nil {
 		reversed := head
 		toDo := head.Next
@@ -30,7 +33,7 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 		if kthNode != nil && kthNode.Next != nil {
 			kthNode = kthNode.Next
 		} else {
-			return kthNode
+			return head
 		}
 	}
 	tmp := head
@@ -45,7 +48,7 @@ func cons(i int, n *ListNode) *ListNode {
 
 func main() {
 	a := cons(1, cons(2, cons(3, cons(4, cons(5, nil)))))
-	b := reverseKGroup(a, 1)
+	b := reverseKGroup(a, 3)
 	fmt.Println(b)
 	fmt.Println(b.Next)
 	fmt.Println(b.Next.Next)
