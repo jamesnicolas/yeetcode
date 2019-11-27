@@ -30,7 +30,7 @@ func reverseUntil(head, tail *ListNode) *ListNode {
 func reverseKGroup(head *ListNode, k int) *ListNode {
 	kthNode := head
 	for i := 0; i < k; i++ {
-		if kthNode != nil && kthNode.Next != nil {
+		if kthNode != nil {
 			kthNode = kthNode.Next
 		} else {
 			return head
