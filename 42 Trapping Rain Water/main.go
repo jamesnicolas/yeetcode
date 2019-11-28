@@ -16,6 +16,8 @@ func max(a, b int) int {
 	}
 	return b
 }
+
+// brute force solution
 func trap1(height []int) int {
 	waterVol := 0
 	for i, h := range height {
@@ -34,6 +36,27 @@ func trap1(height []int) int {
 	return waterVol
 }
 
+// dp solution
+func trap2(height []int) int {
+	length := len(height)
+	if length == 0 {
+		return 0
+	}
+	maxL := make([]int, length)
+	maxR := make([]int, length)
+	maxL[0] = height[0]
+	maxR[length-1] = height[length-1]
+	for i := length - 2; i > 0; i-- {
+		maxR[i] = max(height[i], maxR[i+1])
+	}
+	waterVol := 0
+	for i := 1; i < length; i++ {
+		maxL[i] = max(height[i], maxL[i-1])
+		waterVol += min(maxR[i], maxL[i]) - height[i]
+	}
+	return waterVol
+}
+
 func main() {
-	fmt.Println(trap1([]int{0, 1, 0, 1, 2, 1, 0, 1, 3, 2, 1, 2, 1}))
+	fmt.Println(trap2([]int{0, 1, 0, 1, 2, 1, 0, 1, 3, 2, 1, 2, 1}))
 }
