@@ -12,9 +12,9 @@ func productExceptSelf(nums []int) []int {
 	if length == 1 {
 		return []int{1}
 	}
-	answer := make([]int, length)
-	leftProduct := make([]int, length)
-	rightProduct := make([]int, length)
+	answer := make([]int, length, length)
+	leftProduct := make([]int, length, length)
+	rightProduct := make([]int, length, length)
 	rightProduct[length-1] = 1
 	for i := length - 2; i >= 0; i-- {
 		rightProduct[i] = rightProduct[i+1] * nums[i+1]
