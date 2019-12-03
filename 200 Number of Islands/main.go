@@ -23,7 +23,10 @@ type posn struct {
 	y int
 }
 
-func numIslands(grid [][]byte) int {
+func numIslands1(grid [][]byte) int {
+	if len(grid) == 0 {
+		return 0
+	}
 	var mark func(int, int)
 	yMax := len(grid) - 1
 	xMax := len(grid[0]) - 1
@@ -58,6 +61,43 @@ func numIslands(grid [][]byte) int {
 	return islands
 }
 
+func numIslands2(grid [][]byte) int {
+	if len(grid) == 0 {
+		return 0
+	}
+	var mark func(int, int)
+	yMax := len(grid) - 1
+	xMax := len(grid[0]) - 1
+	mark = func(x, y int) {
+		if grid[y][x] != '1' {
+			return
+		}
+		grid[y][x] = 0
+		if x+1 <= xMax {
+			mark(x+1, y)
+		}
+		if y+1 <= yMax {
+			mark(x, y+1)
+		}
+		if x-1 >= 0 {
+			mark(x-1, y)
+		}
+		if y-1 >= 0 {
+			mark(x, y-1)
+		}
+	}
+	islands := 0
+	for y := range grid {
+		for x := range grid[y] {
+			if grid[y][x] == '1' {
+				islands++
+			}
+			mark(x, y)
+		}
+	}
+	return islands
+}
+
 func main() {
 	island := "" +
 		"1001\n" +
@@ -68,5 +108,5 @@ func main() {
 		"11\n" +
 		"01" */
 	islandBytes := makeIsland(island)
-	fmt.Println(numIslands(islandBytes))
+	fmt.Println(numIslands2(islandBytes))
 }
