@@ -9,12 +9,6 @@ type intervalCol struct {
 	intervals [][]int
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -23,9 +17,6 @@ func max(a, b int) int {
 }
 
 func (in intervalCol) Less(i, j int) bool {
-	if in.intervals[i][0] == in.intervals[j][0] {
-		return in.intervals[i][1] < in.intervals[j][1]
-	}
 	return in.intervals[i][0] < in.intervals[j][0]
 }
 func (in intervalCol) Len() int {
@@ -36,12 +27,12 @@ func (in intervalCol) Swap(i, j int) {
 }
 
 func mergeTwo(a, b []int) [][]int {
+	if a[0] > b[0] {
+		return mergeTwo(b, a)
+	}
 	if a[0] == b[0] {
 		a[1] = max(a[1], b[1])
 		return [][]int{a}
-	}
-	if a[0] > b[0] {
-		return mergeTwo(b, a)
 	}
 	if a[1] < b[0] {
 		return [][]int{a, b}
